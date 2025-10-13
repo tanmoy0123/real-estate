@@ -1,7 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { assets } from './../assets/assets';
 
 const Navbar = () => {
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+
+  useEffect(() => {
+
+    if (showMobileMenu) {
+      document.body.overflow = 'hidden';
+    } else {
+      document.body.overflow = 'auto';
+    }
+
+    return () => {
+      console.log(`${showMobileMenu} useeffect is executing`)
+      document.body.overflow = 'auto';
+    };
+  }, [showMobileMenu]);
+
+
+
+  const handleMobileMenu = () => {
+    setShowMobileMenu(false);
+  };
+
   return (
     <>
       <div className="absolute top-0 left-0 w-full z-10">
@@ -22,9 +45,26 @@ const Navbar = () => {
           {/* sign up button */}
           <button className="hidden  md:block  bg-white px-8 py-2 rounded-full">Sign up</button>
 
-          <img src={assets.menu_icon} alt="toggle nav icon" className="md:hidden w-7" />
+          <img src={assets.menu_icon} alt="toggle nav icon" className="md:hidden w-7 cursor-pointer" onClick={() => setShowMobileMenu(true)} />
+        </div>
+
+        {/* Mobile Menu */}
+        <div className={`md:hidden ${showMobileMenu ? 'fixed w-full' : 'h-0 w-0'} right-0 top-0  bottom-0 overflow-hidden bg-white transition-all`}>
+
+          <div className="flex justify-end p-6 cursor-pointer">
+            <img src={assets.cross_icon} alt="Close the menu" className="w-7" onClick={handleMobileMenu} />
+          </div>
+          <ul className="flex flex-col items-center gap-2 mt-5 px-5 text-lg font-medium">
+            <a onClick={handleMobileMenu} href="#Home" className="px-4 py-2 rounded-full inline-block hover:text-blue-500">Home</a>
+            <a onClick={handleMobileMenu} href="#About" className="px-4 py-2 rounded-full inline-block hover:text-blue-500">About</a>
+            <a onClick={handleMobileMenu} href="#Projects" className="px-4 py-2 rounded-full inline-block hover:text-blue-500">Projects</a>
+            <a onClick={handleMobileMenu} href="#Testimonials" className="px-4 py-2 rounded-full inline-block hover:text-blue-500">Testimonials</a>
+          </ul>
         </div>
       </div>
+
+
+
     </>
   );
 };
