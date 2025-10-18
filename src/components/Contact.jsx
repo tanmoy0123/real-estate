@@ -1,4 +1,6 @@
+import { motion } from 'framer-motion';
 import React, { useState } from 'react'
+import { toast } from 'react-toastify';
 
 const Contact = () => {
 
@@ -7,7 +9,13 @@ const Contact = () => {
     const onSubmit = async (event) => {
         event.preventDefault();
         setResult("Sending....");
+        console.log('Event Target: ');
+        console.log(event.target);
         const formData = new FormData(event.target);
+        console.log('Form Data: ');
+        console.log(formData.get('Name'));
+        console.log(formData.get('Email'));
+        console.log(formData.get('Message'))
         formData.append("access_key", "49ec3829-eb03-494e-8322-f1506fd7ffb1");
 
         const response = await fetch("https://api.web3forms.com/submit", {
@@ -17,12 +25,12 @@ const Contact = () => {
 
         const data = await response.json();
         if (data.success) {
-            alert('Form submitted successfully.')
+            toast.success('Form submitted successfully.')
             setResult("");
             event.target.reset();
         } else {
             setResult("");
-            alert(data.message);
+            toast.error(data.message);
             console.log('Error', data);
         }
     };
@@ -30,7 +38,10 @@ const Contact = () => {
 
 
     return (
-        <div className='scroll-mt-25 flex flex-col items-center justify-center container mx-auto p-14 md:px-20 lg:px-32 overflow-hidden' id='Contact'>
+        <motion.div initial={{ opacity: 0, y: 200 }}
+            transition={{ duration: 1.5 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} className='scroll-mt-25 flex flex-col items-center justify-center container mx-auto p-14 md:px-20 lg:px-32 overflow-hidden' id='Contact'>
             <h1 className='text-2xl sm:text-4xl font-bold mb-2' >Contact <span className='underline underline-offset-4 decoration-1 under font-light'>With us</span></h1>
             <p className='text-gray-500 max-w-90 text-center mb-8'>Ready to make a move? Let's Build Your Future Together</p>
 
@@ -56,7 +67,7 @@ const Contact = () => {
                 <button className='bg-blue-600 text-white py-2 px-12 mb-10 rounded'>{result ? result : 'Send Message'}</button>
 
             </form>
-        </div>
+        </motion.div>
     )
 }
 

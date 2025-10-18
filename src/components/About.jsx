@@ -1,6 +1,7 @@
 import React from 'react'
 import { assets } from '../assets/assets'
 import AboutCard from './AboutCard'
+import { motion } from 'framer-motion'
 
 const About = () => {
 
@@ -28,7 +29,11 @@ const About = () => {
 
 
     return (
-        <div className='scroll-mt-24 container mx-auto p-14 md:px-20 lg:px-32 overflow-hidden flex flex-col items-center justify-center' id='About'>
+
+        <motion.div initial={{ opacity: 0, x: 200 }}
+            transition={{ duration: 1.5 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }} className='scroll-mt-24 container mx-auto p-14 md:px-20 lg:px-32 overflow-hidden flex flex-col items-center justify-center' id='About'>
             <h1 className='text-2xl sm:text-4xl font-bold mb-2' >About <span className='underline underline-offset-4 decoration-1 under font-light'>Our Brnad</span></h1>
             <p className='text-gray-500 max-w-90 text-center mb-8'>Passoinate About Properties, Dedicated to Your Vision</p>
 
@@ -48,7 +53,7 @@ const About = () => {
                 </div>
 
             </div>
-        </div>
+        </motion.div>
     )
 }
 

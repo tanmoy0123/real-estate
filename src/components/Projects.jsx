@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { assets, projectsData } from '../assets/assets'
+import { motion } from 'framer-motion';
+
+
 
 const Projects = () => {
 
@@ -33,7 +36,10 @@ const Projects = () => {
         setCurrentIndex((prevIndex) => prevIndex === 0 ? projectsData.length - 1 : prevIndex - 1)
     }
     return (
-        <div className='scroll-mt-24 flex flex-col items-center justify-center container mx-auto p-14 md:px-20 lg:px-32 overflow-hidden' id='Projects'>
+        <motion.div initial={{ opacity: 0, x: -200 }}
+            transition={{ duration: 1.5 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }} className='scroll-mt-24 flex flex-col items-center justify-center container mx-auto p-14 md:px-20 lg:px-32 overflow-hidden' id='Projects'>
 
             <h1 className='text-2xl sm:text-4xl font-bold mb-2'>Projects <span className='underline underline-offset-4 decoration-1 under font-light'>Completed</span></h1>
             <p className='text-gray-500 max-w-90 text-center mb-8'>Crafting spaces, Building Legacies-Explore Our Portfolio</p>
@@ -76,7 +82,7 @@ const Projects = () => {
                     ))}
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }
 
